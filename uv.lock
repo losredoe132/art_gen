@@ -11,12 +11,20 @@ dependencies = [
     { name = "numpy" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "art-gen" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "flask", specifier = ">=3.1.0" },
     { name = "jinja2", specifier = ">=3.1.5" },
     { name = "numpy", specifier = ">=2.2.2" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "art-gen", virtual = "." }]
 
 [[package]]
 name = "blinker"

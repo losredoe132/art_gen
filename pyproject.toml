@@ -1,5 +1,5 @@
 [project]
-name = "art-gen"
+name = "art_gen"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -9,3 +9,11 @@ dependencies = [
     "jinja2>=3.1.5",
     "numpy>=2.2.2",
 ]
+
+[dependency-groups]
+dev = [
+    "art_gen",
+]
+
+[tool.uv.sources]
+art_gen = { workspace = true }
