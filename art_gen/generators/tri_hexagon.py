@@ -9,10 +9,16 @@ import math
 
 class TriHexagon(SVGObject):
     def __init__(
-        self, base: Coordinate, R: float, styles: tuple[SVGStyle, SVGStyle, SVGStyle]
+        self,
+        base: Coordinate,
+        R: float,
+        styles: tuple[SVGStyle, SVGStyle, SVGStyle],
+        inverted: bool = False,
     ):
         super().__init__(SVGStyle())
         self.base = base
+        self.inverted = inverted
+        self.offset = 1 if self.inverted else 0
         self.R = R
         self.hexagon = Hexagon(self.base, self.R, self.style)
         self.child_elements = [
@@ -20,27 +26,27 @@ class TriHexagon(SVGObject):
             Polygon(
                 [
                     self.hexagon.base,
-                    self.hexagon.points[0],
-                    self.hexagon.points[1],
-                    self.hexagon.points[2],
+                    self.hexagon.points[-0 + self.offset],
+                    self.hexagon.points[-1 + self.offset],
+                    self.hexagon.points[-2 + self.offset],
                 ],
                 style=styles[0],
             ),
             Polygon(
                 [
                     self.hexagon.base,
-                    self.hexagon.points[2],
-                    self.hexagon.points[3],
-                    self.hexagon.points[4],
+                    self.hexagon.points[-2 + self.offset],
+                    self.hexagon.points[-3 + self.offset],
+                    self.hexagon.points[-4 + self.offset],
                 ],
                 style=styles[1],
             ),
             Polygon(
                 [
                     self.hexagon.base,
-                    self.hexagon.points[4],
-                    self.hexagon.points[5],
-                    self.hexagon.points[0],
+                    self.hexagon.points[-4 + self.offset],
+                    self.hexagon.points[-5 + self.offset],
+                    self.hexagon.points[-0 + self.offset],
                 ],
                 style=styles[2],
             ),
@@ -66,7 +72,7 @@ class HexagonArtGenerator(ArtGenerator):
         svg_objects = []
         for column_idx in range(self.grid_size.columns):
             for row_idx in range(self.grid_size.rows):
-                if self.is_valid(row_idx, column_idx):
+                if self.is_valid(row_idx, column_idx) and self.is_randomly_selected():
                     base = Coordinate(
                         offset.x + (column_idx * distance.x),
                         offset.y + (row_idx * distance.y),
@@ -76,9 +82,16 @@ class HexagonArtGenerator(ArtGenerator):
                             base=base,
                             R=R,
                             styles=self.get_styles(row_idx, column_idx),
+                            inverted=self.is_randomly_inverted(),
                         )
                     )
         return svg_objects
+
+    def is_randomly_selected(self) -> bool:
+        return np.random.rand() > 0.1
+
+    def is_randomly_inverted(self) -> bool:
+        return np.random.rand() > 0.3
 
     def is_valid(self, row_idx, column_idx) -> bool:
         if (row_idx % 4 == 0) and (column_idx % 6 == 0):
