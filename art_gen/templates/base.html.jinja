@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <body>
+
+    <div class="centered">
+      <svg
+        width="{{ width }}"
+        height="{{ height }}"
+        viewBox="0 0 {{ width * 10 }} {{ height * 10 }}"
+      >
+        {{ content }}
+      </svg>
+    </div>
+  </body>
+  <footer class="centered">
+    <p>&copy; 2025 Finn Jonas Peper. All rights reserved.</p>
+  </footer>
+</html>
+<style>
+  .centered {
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+  }
+</style>
