@@ -114,7 +114,7 @@ class HexagonArtGenerator(ArtGenerator):
                     self.rand_nums[side_idx][color_channel_idx][1],
                     column_idx / self.grid_size.columns,
                 )
-                val = int(127 + ((channel_val + row_val) / 2) * 255)
+                val = int(127 + ((channel_val + row_val) / 2) * 129)
                 rgb_vals.append(val)
             styles.append(SVGStyle(fill=SVGNumericColor(*rgb_vals)))
         return styles

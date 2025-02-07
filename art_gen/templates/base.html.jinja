@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <body>
-
     <div class="centered">
       <svg
         width="{{ width }}"
@@ -11,10 +10,14 @@
         {{ content }}
       </svg>
     </div>
+    <div class="centered">
+      <button onclick="prevPage()">Previous</button>
+      <button onclick="nextPage()">Next</button>
+    </div>
+    <footer class="centered">
+      <p>&copy; 2025 Finn Jonas Peper. All rights reserved.</p>
+    </footer>
   </body>
-  <footer class="centered">
-    <p>&copy; 2025 Finn Jonas Peper. All rights reserved.</p>
-  </footer>
 </html>
 <style>
   .centered {
@@ -25,5 +28,28 @@
 
   body {
     font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 </style>
+<script>
+  let queryString = window.location.pathname;
+  seed = parseInt(queryString.split("/")[2]);
+
+  function redirect(seed) {
+    seed = Math.max(0, seed);
+    const url = `http://127.0.0.1:8000/hexagon/${seed}`;
+    window.location.href = url;
+  }
+
+  function nextPage() {
+    seed++;
+    redirect(seed);
+  }
+
+  function prevPage() {
+    seed--;
+    redirect(seed);
+  }
+</script>
